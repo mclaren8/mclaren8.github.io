@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16.png">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.3/css/all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="next-config" data-name="main" type="application/json">{&quot;hostname&quot;:&quot;example.com&quot;,&quot;root&quot;:&quot;&#x2F;&quot;,&quot;images&quot;:&quot;&#x2F;images&quot;,&quot;scheme&quot;:&quot;Gemini&quot;,&quot;version&quot;:&quot;8.4.0&quot;,&quot;exturl&quot;:false,&quot;sidebar&quot;:{&quot;position&quot;:&quot;left&quot;,&quot;display&quot;:&quot;post&quot;,&quot;padding&quot;:18,&quot;offset&quot;:12},&quot;copycode&quot;:false,&quot;bookmark&quot;:{&quot;enable&quot;:false,&quot;color&quot;:&quot;#222&quot;,&quot;save&quot;:&quot;auto&quot;},&quot;fancybox&quot;:false,&quot;mediumzoom&quot;:false,&quot;lazyload&quot;:false,&quot;pangu&quot;:false,&quot;comments&quot;:{&quot;style&quot;:&quot;tabs&quot;,&quot;active&quot;:null,&quot;storage&quot;:true,&quot;lazyload&quot;:false,&quot;nav&quot;:null},&quot;motion&quot;:{&quot;enable&quot;:true,&quot;async&quot;:false,&quot;transition&quot;:{&quot;post_block&quot;:&quot;fadeIn&quot;,&quot;post_header&quot;:&quot;fadeInDown&quot;,&quot;post_body&quot;:&quot;fadeInDown&quot;,&quot;coll_header&quot;:&quot;fadeInLeft&quot;,&quot;sidebar&quot;:&quot;fadeInUp&quot;}},&quot;prism&quot;:false,&quot;i18n&quot;:{&quot;placeholder&quot;:&quot;搜索...&quot;,&quot;empty&quot;:&quot;没有找到任何搜索结果：${query}&quot;,&quot;hits_time&quot;:&quot;找到 ${hits} 个搜索结果（用时 ${time} 毫秒）&quot;,&quot;hits&quot;:&quot;找到 ${hits} 个搜索结果&quot;}}</script>
+<meta name="description" content="最近发现无端端内存占用很高，任务管理器查看发现是Antimalware Service Executable">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解决Windows Defender占用高内存">
+<meta property="og:url" content="http://example.com/2021/05/14/%E8%A7%A3%E5%86%B3Windows-Defender%E5%8D%A0%E7%94%A8%E9%AB%98%E5%86%85%E5%AD%98/index.html">
+<meta property="og:site_name" content="A box of chocolates">
+<meta property="og:description" content="最近发现无端端内存占用很高，任务管理器查看发现是Antimalware Service Executable">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://raw.githubusercontent.com/mclaren8/images/master/20210514174842.png">
+<meta property="og:image" content="http://example.com/2021/05/14/%E8%A7%A3%E5%86%B3Windows-Defender%E5%8D%A0%E7%94%A8%E9%AB%98%E5%86%85%E5%AD%98/20210514175920.png">
+<meta property="article:published_time" content="2021-05-14T09:45:40.000Z">
+<meta property="article:modified_time" content="2021-05-14T10:11:07.868Z">
+<meta property="article:author" content="McLaren888">
+<meta property="article:tag" content="win10">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://raw.githubusercontent.com/mclaren8/images/master/20210514174842.png">
+
+
+<link rel="canonical" href="http://example.com/2021/05/14/%E8%A7%A3%E5%86%B3Windows-Defender%E5%8D%A0%E7%94%A8%E9%AB%98%E5%86%85%E5%AD%98/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{&quot;sidebar&quot;:&quot;&quot;,&quot;isHome&quot;:false,&quot;isPost&quot;:true,&quot;lang&quot;:&quot;zh-CN&quot;,&quot;comments&quot;:true,&quot;permalink&quot;:&quot;http:&#x2F;&#x2F;example.com&#x2F;2021&#x2F;05&#x2F;14&#x2F;%E8%A7%A3%E5%86%B3Windows-Defender%E5%8D%A0%E7%94%A8%E9%AB%98%E5%86%85%E5%AD%98&#x2F;&quot;,&quot;path&quot;:&quot;2021&#x2F;05&#x2F;14&#x2F;解决Windows-Defender占用高内存&#x2F;&quot;,&quot;title&quot;:&quot;解决Windows Defender占用高内存&quot;}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">&quot;&quot;</script>
+<title>解决Windows Defender占用高内存 | A box of chocolates</title><script src="/js/config.js"></script>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">A box of chocolates</h1>
+      <i class="logo-line"></i>
+    </a>
+      <img class="custom-logo-image" src="/uploads/custom-logo.jpg" alt="A box of chocolates">
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li>
+        <li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+        <li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+        <li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a></li>
+        <li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a></li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E5%A4%8D1%E6%9B%B4%E6%94%B9windows-defender%E7%9A%84%E8%AE%A1%E5%88%92%E9%80%89%E9%A1%B9"><span class="nav-number">1.</span> <span class="nav-text">修复＃1：更改Windows Defender的计划选项</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BF%AE%E5%A4%8D2%E7%A6%81%E7%94%A8windows-defender"><span class="nav-number">2.</span> <span class="nav-text">修复＃2：禁用Windows Defender</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">McLaren888</p>
+  <div class="site-description" itemprop="description">It takes a strong man to save himself,and a great man to save another.</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">6</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/kai-soul" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;kai-soul" rel="noopener" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+  <div class="cc-license site-overview-item animated" itemprop="license">
+    <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" class="cc-opacity" rel="noopener" target="_blank"><img src="/images/cc-by-nc-sa.svg" alt="Creative Commons"></a>
+  </div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/05/14/%E8%A7%A3%E5%86%B3Windows-Defender%E5%8D%A0%E7%94%A8%E9%AB%98%E5%86%85%E5%AD%98/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="McLaren888">
+      <meta itemprop="description" content="It takes a strong man to save himself,and a great man to save another.">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="A box of chocolates">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          解决Windows Defender占用高内存
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2021-05-14 17:45:40 / 修改时间：18:11:07" itemprop="dateCreated datePublished" datetime="2021-05-14T17:45:40+08:00">2021-05-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/window/" itemprop="url" rel="index"><span itemprop="name">window</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>最近发现无端端内存占用很高，任务管理器查看发现是<code>Antimalware Service Executable</code></p>
+<span id="more"></span>
+<p><img src="https://raw.githubusercontent.com/mclaren8/images/master/20210514174842.png"/></p>
+<p>上网查找了一下，发现几种方法</p>
+<h4 id="修复1更改windows-defender的计划选项">修复＃1：更改Windows Defender的计划选项</h4>
+<p>1、打开“开始”菜单，键入“任务计划程序”，然后单击最上面的结果以启动程序。</p>
+<p>2、在左侧的导航窗格中，双击“任务计划程序库”。继续展开这些文件夹并导航到以下目标：Library / Microsoft / Windows / Windows Defender。</p>
+<p>3、打开Windows Defender文件夹后，双击位于中间窗格中的Windows Defender Scheduled Scan。</p>
+<p>4、单击“条件”选项卡，取消选中所有选项 ，然后单击“确定”。这将清除您的计划扫描。</p>
+<p>5、为了保护您的计算机，安排一些新的扫描很重要，但是我们可以通过这种方式来减少对系统性能的影响。为此，请双击 Windows Defender预定扫描，选择“触发器”选项卡，然后单击“新建”。</p>
+<p>6、创建适合您需求的新扫描计划，选择在保护和系统效率之间取得平衡的选项。作为指导原则，我们建议（至少）每周扫描一次，这样您不太可能会注意到CPU使用率增加。</p>
+<p>7、对在Library / Microsoft / Windows / Windows Defender文件夹中找到的其余三个服务（Windows Defender缓存维护，Windows Defender清理，Windows Defender验证）重复该过程。</p>
+<h4 id="修复2禁用windows-defender">修复＃2：禁用Windows Defender</h4>
+<p>请记住，这样做会使您容易遭受一系列网络攻击，因此在删除Windows Defender之前，必须在计算机上安装有效的反恶意软件产品非常重要。</p>
+<p>使用注册表编辑器完全禁用Windows Defender。</p>
+<p>1、按Windows键 + R打开“运行”对话框。</p>
+<p>2、在“运行”对话框中，键入regedit，然后单击“确定”以打开注册表编辑器。</p>
+<p>3、在左侧的导航窗格中，双击文件夹以导航到HKEY_LOCAL_MACHINE  SOFTWARE  Policies  Microsoft  Windows Defender。</p>
+<p>4、如果找到名为DisableAntiSpyware的注册表项，请双击它并将其值数据设置为1。</p>
+<p>如果没有看到名为DisableAntiSpyware的注册表项，请在“注册表编辑器”主窗格中右键单击，然后选择“新建”&gt;“ DWORD（32位）值”。</p>
+<p>将此新注册表项命名为DisableAntiSpyware。双击并将其值数据设置为1。</p>
+<hr />
+<p>除了使用这种方法，还可以下载禁用工具，简单快捷</p>
+<p>下载链接：<a target="_blank" rel="noopener" href="https://www.sordum.org/9480/defender-control-v1-8/" class="uri">https://www.sordum.org/9480/defender-control-v1-8/</a></p>
+<img src="/2021/05/14/%E8%A7%A3%E5%86%B3Windows-Defender%E5%8D%A0%E7%94%A8%E9%AB%98%E5%86%85%E5%AD%98/20210514175920.png" class="">
+<p>搞定</p>
+<p>参考链接：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_41371349/article/details/106628372" class="uri">https://blog.csdn.net/qq_41371349/article/details/106628372</a></p>
+<p>​ <a target="_blank" rel="noopener" href="https://www.52pojie.cn/thread-1075542-1-1.html" class="uri">https://www.52pojie.cn/thread-1075542-1-1.html</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          
+
+<div class="post-copyright">
+<ul>
+  <li class="post-copyright-author">
+      <strong>本文作者： </strong>McLaren888
+  </li>
+  <li class="post-copyright-link">
+      <strong>本文链接：</strong>
+      <a href="http://example.com/2021/05/14/%E8%A7%A3%E5%86%B3Windows-Defender%E5%8D%A0%E7%94%A8%E9%AB%98%E5%86%85%E5%AD%98/" title="解决Windows Defender占用高内存">http://example.com/2021/05/14/解决Windows-Defender占用高内存/</a>
+  </li>
+  <li class="post-copyright-license">
+    <strong>版权声明： </strong>本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/zh-CN" rel="noopener" target="_blank"><i class="fab fa-fw fa-creative-commons"></i>BY-NC-SA</a> 许可协议。转载请注明出处！
+  </li>
+</ul>
+</div>
+
+          <div class="post-tags">
+              <a href="/tags/win10/" rel="tag"># win10</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/05/08/Hexo-next%E4%B8%BB%E9%A2%98%E4%BB%A3%E7%A0%81%E5%9D%97%E9%AB%98%E4%BA%AE%E8%AE%BE%E7%BD%AE/" rel="prev" title="Hexo-next主题代码块高亮设置">
+                  <i class="fa fa-chevron-left"></i> Hexo-next主题代码块高亮设置
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+<script src="/js/comments.js"></script>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">McLaren888</span>
+</div>
+
+<!--
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+-->
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@next-theme/pjax@0.5.0/pjax.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/next-boot.js"></script><script src="/js/pjax.js"></script>
+
+  
+
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">false</script><script class="next-config" data-name="mathjax" type="application/json">{&quot;enable&quot;:true,&quot;tags&quot;:&quot;none&quot;,&quot;js&quot;:&quot;https:&#x2F;&#x2F;cdn.jsdelivr.net&#x2F;npm&#x2F;mathjax@3.1.4&#x2F;es5&#x2F;tex-mml-chtml.js&quot;}</script>
+<script src="/js/third-party/math/mathjax.js"></script>
+
+
+
+</body>
+</html>
