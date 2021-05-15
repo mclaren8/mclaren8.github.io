@@ -2818,7 +2818,7 @@ body {
   background: rgba(255,255,255,0.6);
 }
 .sidebar {
-  transition-duration: 0.4s;
+  transition-duration: 0.1s;
   opacity: 0.6;
 }
 .posts-expand .post-title-link {
