@@ -1522,10 +1522,9 @@ pre code {
   line-height: 1.8;
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap;
 }
 .post-toc .nav .nav-child {
-  display: none;
+  display: block;
 }
 .post-toc .nav .active > .nav-child {
   display: block;
@@ -1622,6 +1621,12 @@ pre code {
   display: inline-block;
   margin: 0 5px;
   animation: icon-animate 1.33s ease-in-out infinite;
+}
+.busuanzi-count #busuanzi_container_site_uv {
+  display: none;
+}
+.busuanzi-count #busuanzi_container_site_pv {
+  display: none;
 }
 @-moz-keyframes icon-animate {
   0%, 100% {
@@ -2091,6 +2096,9 @@ pre code {
   .post-meta-item-text {
     display: none;
   }
+}
+#busuanzi_container_page_pv {
+  display: none;
 }
 .post-nav {
   border-top: 1px solid #eee;
@@ -2788,4 +2796,33 @@ mjx-container[display="true"] + br {
   .comments {
     padding: 10px 12px;
   }
+}
+.post-toc .nav .nav-child {
+  display: block;
+}
+.post-toc ol {
+  font-size: 13px;
+}
+body {
+  background: url("/images/backround.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: 50% 50%;
+  background-size: cover;
+  -webkit-background-size: cover;
+  -o-background-size: cover;
+  -moz-background-size: cover;
+  -ms-background-size: cover;
+  opacity: 0.6;
+}
+body #footer > div > div {
+  color: #000;
+}
+.header-inner {
+  background: #fff;
+  opacity: 1;
+}
+.main-inner {
+  background: #fff;
+  opacity: 1;
 }
