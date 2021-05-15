@@ -2810,9 +2810,12 @@ body {
   background-position: 50% 50%;
   background-size: cover;
 }
+.header-inner {
+  background: rgba(255,255,255,0.9);
+}
 .sidebar {
   transition-duration: 0.4s;
-  opacity: 0.3;
+  opacity: 0.9;
 }
 .posts-expand .post-title-link {
   color: #222;
