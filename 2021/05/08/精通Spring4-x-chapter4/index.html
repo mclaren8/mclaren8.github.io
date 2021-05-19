@@ -46,7 +46,7 @@
 <meta property="og:image" content="https://raw.githubusercontent.com/mclaren8/images/master/20210426161100.png">
 <meta property="og:image" content="https://raw.githubusercontent.com/mclaren8/images/master/20210426162033.png">
 <meta property="article:published_time" content="2021-05-08T11:20:09.000Z">
-<meta property="article:modified_time" content="2021-05-08T11:57:12.621Z">
+<meta property="article:modified_time" content="2021-05-19T12:01:06.827Z">
 <meta property="article:author" content="McLaren888">
 <meta property="article:tag" content="Spring4.x">
 <meta name="twitter:card" content="summary">
@@ -153,7 +153,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -236,10 +236,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2021-05-08 19:20:09 / 修改时间：19:57:12" itemprop="dateCreated datePublished" datetime="2021-05-08T19:20:09+08:00">2021-05-08</time>
+      <time title="创建时间：2021-05-08 19:20:09" itemprop="dateCreated datePublished" datetime="2021-05-08T19:20:09+08:00">2021-05-08</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2021-05-19 20:01:06" itemprop="dateModified" datetime="2021-05-19T20:01:06+08:00">2021-05-19</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -527,7 +533,7 @@
 <p>（8）如果Bean实现了①.BeanPostProcessor后处理器，则将调用它的Object postProcessBeforeInitialization(Object bean,String beanName)接口方法对Bean进行加工操作。</p>
 <p>返回的对象为加工处理后的Bean。</p>
 <p>（9）如果Bean实现了InitializingBean接口，则调用接口的afterPropertiesSet()方法</p>
-<p>（10）如果在<bean>中通过init-method属性定义了初始化方法，则将执行这个方法。</p>
+<p>（10）如果在&lt; bean &gt;中通过init-method属性定义了初始化方法，则将执行这个方法。</p>
 <p>（11）如果实现了（8），则调用Object postProcessAfterInitialization(Object bean, String beanName)方法，再次对Bean进行加工处理</p>
 <p>（12）如果在<bean>中指定Bean的作用范围为scope=&quot;prototype&quot;，则将Bean返回给调用者，调用者负责Bean后续声明管理，Spring不再管理声明周期；如果作用范围设置为&quot;singleton&quot;，则将Bean放入Spring IoC容器的缓存池中，并将Bean引用返回给调用者，Spring继续对Bean进行后续生命管理。</p>
 <p>（13）对应作用范围为“singleton”的Bean（默认），容器关闭时，将除非Spring对Bean后续生命周期的管理工作。如果Bean实现了DisposableBean接口，则将调用接口的destory()方法，可以再次编写释放资源、记录日志等操作。</p>
